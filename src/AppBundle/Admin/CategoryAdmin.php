@@ -22,6 +22,11 @@ class CategoryAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper->addIdentifier('name');
-        $listMapper->addIdentifier('id');
+        // $listMapper->addIdentifier('id');
+    }
+
+    public function toString($object)
+    {
+        return $object->getName() ? $object->getName() : "Category";
     }
 }
