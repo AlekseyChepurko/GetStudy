@@ -11,13 +11,30 @@ class PostAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('title', 'text'); //string
-        $formMapper->add('body', 'textarea');
+        // $formMapper->add('title', 'text'); //string
+        // $formMapper->add('body', 'textarea');
+        // $formMapper
+        //     ->add('category', 'sonata_type_model', array(
+        //         'class' => 'AppBundle\Entity\Category',
+        //         'property' => 'name',
+        //         ));
         $formMapper
-            ->add('category', 'entity', array(
-                'class' => 'AppBundle\Entity\Category',
-                'property' => 'name',
-                ));
+        ->tab('Post content')
+            ->with('Content', array('class' => 'col-md-9'))
+                ->add('title', 'text')
+                ->add('body', 'textarea')
+            ->end()
+        ->end()
+
+        ->tab('Post options')
+            ->with('Meta data', array('class' => 'col-md-3'))
+                ->add('category', 'sonata_type_model', array(
+                    'class' => 'AppBundle\Entity\Category',
+                    'property' => 'name',
+                ))
+            ->end()
+        ->end()
+    ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -29,5 +46,10 @@ class PostAdmin extends AbstractAdmin
     {
         $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('body');
+    }
+
+    public function toString($object)
+    {
+        return $object->getTitle();
     }
 }
