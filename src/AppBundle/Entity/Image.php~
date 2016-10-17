@@ -1,0 +1,198 @@
+<?
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
+
+/**
+ * Images
+ *
+ * @ORM\Table(name="images")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ */
+
+class Image{
+    const SERVER_PATH_TO_IMAGE_FOLDER = './images';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="updated", type="DateTime")
+     */
+
+    /**
+    * @ORM\OneToMany(targetEntity="Post", mappedBy="image")
+    */
+    private $Posts;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+   
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
+    public function __construct()
+    {
+        $this->Posts = new ArrayCollection();
+    }
+
+     
+
+    public function getName(){
+        return $this->name;
+    }
+
+
+    /**
+     * Unmapped property to handle file uploads
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile( $file = null)  // file shoule be an uploadedfile class
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+    /**
+     * Manages the copying of the file to the relevant place on the server
+     */
+    public function upload()
+    {   
+        // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // we use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and target filename as params
+        $md5Name = $this->getFile()->getClientOriginalName();
+        $md5Name = md5($md5Name).'.'.$this->getFile()->guessExtension();
+        $this->getFile()->move(
+            Image::SERVER_PATH_TO_IMAGE_FOLDER,
+            $md5Name
+        );
+        var_dump(Image::SERVER_PATH_TO_IMAGE_FOLDER);
+        // set the path property to the filename where you've saved the file
+        $this->name = $this->getFile()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->setFile(null);
+    }
+
+    public function getWebPath(){
+        return Image::SERVER_PATH_TO_IMAGE_FOLDER;
+    }
+
+    /**
+     * Lifecycle callback to upload the file to the server
+     */
+    public function lifecycleFileUpload() {
+        var_dump(";adfkj badufgn sfo;igb");
+        $this->upload();
+    }
+
+    public function setUpdated($time) {
+        // TODO
+    }
+
+
+    /**
+     * Updates the hash value to force the preUpdate and postUpdate events to fire
+     */
+    public function refreshUpdated() {
+        $this->setUpdated(new \DateTime("now"));
+        $this->upload();
+    }
+    
+
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Image
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Add post
+     *
+     * @param \AppBundle\Entity\Post $post
+     *
+     * @return Image
+     */
+    public function addPost(\AppBundle\Entity\Post $post)
+    {
+        $this->Posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param \AppBundle\Entity\Post $post
+     */
+    public function removePost(\AppBundle\Entity\Post $post)
+    {
+        $this->Posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->Posts;
+    }
+}

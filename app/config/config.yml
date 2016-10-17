@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    images_directory: '%kernel.root_dir%/../web/uploads/brochures'
 
 framework:
     #esi:             ~
@@ -80,8 +81,3 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
 
-# sonata_admin:
-#     security:
-
-#         # the default value
-#         handler: sonata.admin.security.handler.role

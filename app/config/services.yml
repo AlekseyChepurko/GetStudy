@@ -1,12 +1,4 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
-
-# services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
 services:
     admin.category:
         class: AppBundle\Admin\CategoryAdmin
@@ -19,3 +11,11 @@ services:
         arguments: [~, AppBundle\Entity\Post, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Post }
+
+    admin.image:
+        class: AppBundle\Admin\ImageAdmin
+        arguments: [~, AppBundle\Entity\Image, 'SonataAdminBundle:CRUD']
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Image }
+        calls:
+            - [ setTranslationDomain, [AppBundle]]

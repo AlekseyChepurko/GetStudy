@@ -20,9 +20,17 @@ class PostAdmin extends AbstractAdmin
         //         ));
         $formMapper
         
-            ->with('Content', array('class' => 'col-md-9'))
-                ->add('title', 'text')
-                ->add('body', 'textarea')
+            ->with('Content', array(
+                'class' => 'col-md-9',
+                'enctype' => 'multipart/form-data'
+                ))
+                    ->add('title', 'text')
+                    ->add('body', 'textarea')
+                    // ->add('image', 'sonata_type_admin', array(
+                    //     'data_class' => 'AppBundle\Entity\Image',
+                    //     'btn_adsd' => 'name',
+                    //     ))
+                    ->add('image', 'sonata_type_admin', array('delete'=>false))
             ->end()
         
             ->with('Meta data', array('class' => 'col-md-3'))
@@ -49,6 +57,43 @@ class PostAdmin extends AbstractAdmin
         $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('body');
         $listMapper->add('category.name');
+        $listMapper->add('image.name');
+    }
+
+    public function prePersist($page) {
+        $this->manageEmbeddedImageAdmins($page);
+    }
+
+    public function preUpdate($page) {
+        var_dump("preUpdate");
+        $this->manageEmbeddedImageAdmins($page);
+    }
+
+    private function manageEmbeddedImageAdmins($page) {
+        // Cycle through each field
+        
+        foreach ($this->getFormFieldDescriptions() as $fieldName => $fieldDescription) {
+            // detect embedded Admins that manage Images
+            if ($fieldDescription->getType() === 'sonata_type_admin' &&
+                ($associationMapping = $fieldDescription->getAssociationMapping()) &&
+                $associationMapping['targetEntity'] === 'AppBundle\Entity\Image'
+            ) {
+                $getter = 'get' . ucfirst($fieldName);
+                $setter = 'set' . ucfirst($fieldName);
+                /** @var Image $image */
+                $image = $page->$getter();
+                if ($image) {
+                    if ($image->getFile()) {
+                        // update the Image to trigger file management
+                        $image->refreshUpdated();
+                    } elseif (!$image->getFile() && !$image->getName()) {
+                        var_dump("expression");
+                        // prevent Sf/Sonata trying to create and persist an empty Image
+                        $page->$setter(null);
+                    }
+                }
+            }
+        }
     }
 
     public function toString($object)
