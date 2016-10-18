@@ -11,7 +11,7 @@ services:
         arguments: [~, AppBundle\Entity\Post, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Post }
-
+            
     admin.image:
         class: AppBundle\Admin\ImageAdmin
         arguments: [~, AppBundle\Entity\Image, 'SonataAdminBundle:CRUD']

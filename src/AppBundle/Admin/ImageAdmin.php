@@ -14,28 +14,21 @@ class ImageAdmin extends AbstractAdmin
         
 
         $formMapper
-            ->add('file', 'file', $fileFieldOptions)
+            ->add('file', 'file', array('required' => false))
             // ... other fields can go here ...
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-    	$image = $this->getSubject();
-        
-        $fileFieldOptions = array('required' => false);
-        if ($image && ($webPath = $image->getWebPath())) {
-            // get the container so the full path to the image can be set
-            $container = $this->getConfigurationPool()->getContainer();
-            $fullPath = $webPath;
-
-            // add a 'help' option containing the preview's img tag
-            $fileFieldOptions['help'] = '<img src="'.$fullPath.'" class="admin-preview" />';
-        }
+  
         $listMapper->addIdentifier('id');
         $listMapper->addIdentifier('name');
-        // $listMapper->add('Posts');
-        // var_dump($this->Posts);
+        $listMapper->addIdentifier('updated');
+        $listMapper
+            ->add('image','image', array('template' => 'AppBundle::adminImageField.html.twig'))
+        ;
+
     }
 
     public function prePersist($image) {
@@ -51,6 +44,7 @@ class ImageAdmin extends AbstractAdmin
     private function manageFileUpload($image) {
 
         if ($image->getFile()) {
+        	// var_dump($image);
             $image->refreshUpdated();
         }
     }

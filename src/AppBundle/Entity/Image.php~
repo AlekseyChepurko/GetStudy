@@ -56,7 +56,7 @@ class Image{
      * @var string
      @ORM\Column(name="md5name", type="string", length=255)
     */
-    public $md5name;
+    public $md5name = "null";
    
     /**
      * Get id
@@ -213,29 +213,5 @@ class Image{
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Set md5name
-     *
-     * @param string $md5name
-     *
-     * @return Image
-     */
-    public function setMd5name($md5name)
-    {
-        $this->md5name = $md5name;
-
-        return $this;
-    }
-
-    /**
-     * Get md5name
-     *
-     * @return string
-     */
-    public function getMd5name()
-    {
-        return $this->md5name;
     }
 }

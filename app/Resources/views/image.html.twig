@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+	
+	{% if object.image != null %}
+    	<img class = "image" src={{'/images/'~object.image.md5name}} >
+    {% endif %}
+	<link rel="stylesheet" href="/css/postAdmin.css">
+{% endblock %}

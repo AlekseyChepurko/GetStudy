@@ -11,13 +11,6 @@ class PostAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
-        // $formMapper->add('title', 'text'); //string
-        // $formMapper->add('body', 'textarea');
-        // $formMapper
-        //     ->add('category', 'sonata_type_model', array(
-        //         'class' => 'AppBundle\Entity\Category',
-        //         'property' => 'name',
-        //         ));
         $formMapper
         
             ->with('Content', array(
@@ -26,10 +19,6 @@ class PostAdmin extends AbstractAdmin
                 ))
                     ->add('title', 'text')
                     ->add('body', 'textarea')
-                    // ->add('image', 'sonata_type_admin', array(
-                    //     'data_class' => 'AppBundle\Entity\Image',
-                    //     'btn_adsd' => 'name',
-                    //     ))
                     ->add('image', 'sonata_type_admin', array('delete'=>false))
             ->end()
         
@@ -54,22 +43,27 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+        $listMapper->addIdentifier('id');
         $listMapper->addIdentifier('title');
         $listMapper->addIdentifier('body');
         $listMapper->add('category.name');
-        $listMapper->add('image.name');
+        $listMapper->add('updated');
+        $listMapper->add('image', 'file', array(
+            'template'=> 'AppBundle::adminPostImageField.html.twig'
+            ));
     }
 
-    public function prePersist($page) {
-        $this->manageEmbeddedImageAdmins($page);
+    public function prePersist($post) {
+        $post->setUpdated(new \DateTime("now"));
+        $this->manageEmbeddedImageAdmins($post);
     }
 
-    public function preUpdate($page) {
-        var_dump("preUpdate");
-        $this->manageEmbeddedImageAdmins($page);
+    public function preUpdate($post) {
+        $post->setUpdated(new \DateTime("now"));
+        $this->manageEmbeddedImageAdmins($post);
     }
 
-    private function manageEmbeddedImageAdmins($page) {
+    private function manageEmbeddedImageAdmins($post) {
         // Cycle through each field
         
         foreach ($this->getFormFieldDescriptions() as $fieldName => $fieldDescription) {
@@ -81,15 +75,14 @@ class PostAdmin extends AbstractAdmin
                 $getter = 'get' . ucfirst($fieldName);
                 $setter = 'set' . ucfirst($fieldName);
                 /** @var Image $image */
-                $image = $page->$getter();
+                $image = $post->$getter();
                 if ($image) {
                     if ($image->getFile()) {
                         // update the Image to trigger file management
                         $image->refreshUpdated();
                     } elseif (!$image->getFile() && !$image->getName()) {
-                        var_dump("expression");
                         // prevent Sf/Sonata trying to create and persist an empty Image
-                        $page->$setter(null);
+                        $post->$setter(null);
                     }
                 }
             }
