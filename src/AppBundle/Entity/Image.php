@@ -160,14 +160,12 @@ class Image{
      */
     public function setName($name)
     {   
-        // var_dump($name);
         $this->name = $name;
 
         $md5Name = $this->getFile()->getClientOriginalName();
         $md5Name = md5($md5Name).'.'.$this->getFile()->guessExtension();
         $this->md5Name = $md5Name;
 
-        var_dump($this->md5Name);
         return $this;
     }
 

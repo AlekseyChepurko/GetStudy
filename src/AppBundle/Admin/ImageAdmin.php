@@ -44,7 +44,6 @@ class ImageAdmin extends AbstractAdmin
     private function manageFileUpload($image) {
 
         if ($image->getFile()) {
-        	// var_dump($image);
             $image->refreshUpdated();
         }
     }
