@@ -15,12 +15,17 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+       
         $category = $em
             ->getRepository('AppBundle:Category')
-            ->findOneBy(array(
-                'name' => 'Main Posts',
+            ->findOneBy(
+                array(
+                    'name' => 'Main Posts',
                 ));
+
+        // var_dump($category->getPosts());
         $posts = $category->getPosts()->getValues();
+        $posts = array_reverse($posts);
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [

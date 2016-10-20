@@ -3,24 +3,73 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+
         {% block stylesheets %}{% endblock %}
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="/assets/css/index.css">
     </head>
     <body>
 
-        <div id="wrapper">
+        <header>
             
-            <div id="container">
-                
-                <header>hello</header>
+            <div class="header__content">
+                hello
+            </div>
+    
+            <svg class = "header__svg_image" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 1280 70" enable-background="new 0 0 1280 70" xml:space="preserve" preserveAspectRatio="none">
+                <polygon points="640,50 1280,0 0,0 "/>
+            </svg>
 
+            <div class="navigation__bar">
+                <div class="nav__item"></div>
+                <div class="nav__item"></div>
+                <div class="nav__item"></div>
+            </div>
+
+        </header>
+        
+
+        <div class="menu__wrap">
+            <div class="navigation__menu_mobile">
+                    <ul>
+                        <li class="navigation__menu_item_mobile hidden">ads</li>
+                        <li class="navigation__menu_item_mobile hidden">ss</li>
+                        <li class="navigation__menu_item_mobile hidden">aa</li>
+                    </ul>
+                </div>
+        </div>
+
+        <div id="wrapper">
+            <div id="container">
+                <div class="navigation__menu">
+                    <ul>
+                        <li class="navigation__menu_item">ads</li>
+                        <li class="navigation__menu_item">ss</li>
+                        <li class="navigation__menu_item">aa</li>
+                    </ul>
+                </div>
+                
                     {% block body %}{% endblock %}
 
-                <footer>hi. im footer</footer>
 
             </div>
         </div>
-    {% block javascripts %}{% endblock %}
+
+        <footer>
+            <div class="footer__content">
+                hi. im footer
+            </div>
+                
+
+        </footer>
+
+    {% block javascripts %}
+    {% endblock %}
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="/assets/js/app.js"></script>
 
     </body>
 </html>

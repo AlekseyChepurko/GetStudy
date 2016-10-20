@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-            
-            {% for post in posts %}
-                <div class="post"> 
-                    <div class="post_title">
-                        {{ post.title }}
-                    </div>
+    
+    <div class="posts_wrap">
+        
+        {% for post in posts %}
+            <div class="post"> 
 
-                    <div class="post_body">
-                        {{ post.body }}
-                    </div>
-
-                    <img src={{'/images/'~post.image.md5name}} alt="" class="post_image">
+                <div class="post_title">
+                    {{ post.title }}
                 </div>
-            {% endfor %}
+
+                <div class="post_body">
+                    {{ post.body }}
+                </div>
+                
+                {% if post.image%}
+                    <img src={{'/images/'~post.image.md5name}} alt="" class="img-responsive">
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    
+    </div>    
 
 {% endblock %}
 
