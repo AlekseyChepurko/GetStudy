@@ -1,0 +1,10 @@
+<form class = "form_login" action="{{ path("fos_user_security_check") }}" method="post">
+  <label>Логин</label>
+  <input type="text" name="_username" required="required" />
+
+  <label>Пароль</label>
+  <input type="password" name="_password" required="required" />
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+  <button type="submit"> Войти</button>
+  <a href="/" class="registration_link">Регистрация</a>
+</form>

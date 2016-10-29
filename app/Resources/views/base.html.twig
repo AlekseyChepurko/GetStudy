@@ -3,19 +3,71 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="/assets/js/preload.js"></script>
+        <link rel="stylesheet" href="/assets/css/preload.css">
         {% block stylesheets %}{% endblock %}
+
         
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="/assets/css/index.css">
+        <style>
+            body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+            h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+            h1 { font-size: 36px; }
+            h2 { font-size: 21px; margin-bottom: 1em; }
+            p { margin: 0 0 1em 0; }
+            a { color: #0000F0; }
+            a:hover { text-decoration: none; }
+            code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+            
+            #wrapper { 
+                background: #FFF;
+                margin: 1em auto;
+                max-width: 800px;
+                width: 95%;
+            }
+            
+            #container { 
+                padding: 2em; 
+                /*max-width: 800px;*/
+            }
+            
+            h1 span { 
+                display: block; 
+                font-size: 75%;
+            }
+            
+            
+            .post_image {
+                max-height: 200px;
+            }
+
+            @media (min-width: 768px) {
+                #wrapper { width: 80%; margin: 2em auto; }
+               
+                #status a, #next a { display: block; }
+
+                @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+                @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+                .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+            }
+        </style>
+    
+        <link rel="stylesheet" href="/assets/css/index.css">    
+        
     </head>
+
+    {% import "default/menu.html.twig" as menus %}
+    {% set menu_items = [["Главная", "/"], ["О проекте", "/about"], ["Отзывы", "/feedback"]] %}
+
     <body>
 
+        {% include "preloader.html.twig" %}
         <header>
             
             <div class="header__content">
-                hello
+                <div class="header__caption">
+                    Get Study
+                </div>
             </div>
     
             <svg class = "header__svg_image" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -31,45 +83,65 @@
 
         </header>
         
-
-        <div class="menu__wrap">
-            <div class="navigation__menu_mobile">
-                    <ul>
-                        <li class="navigation__menu_item_mobile hidden">ads</li>
-                        <li class="navigation__menu_item_mobile hidden">ss</li>
-                        <li class="navigation__menu_item_mobile hidden">aa</li>
-                    </ul>
-                </div>
-        </div>
-
+        {{ menus.mobile_menu(menu_items) }}
+        
         <div id="wrapper">
-            <div id="container">
-                <div class="navigation__menu">
-                    <ul>
-                        <li class="navigation__menu_item">ads</li>
-                        <li class="navigation__menu_item">ss</li>
-                        <li class="navigation__menu_item">aa</li>
-                    </ul>
-                </div>
-                
-                    {% block body %}{% endblock %}
 
+            <div class="university_logo_wrap">
+                <div class="welcome_block">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            {% set left_text = 'С возвращением,' %}
+                            {% set right_text = app.user.username %}                           
+                        {% else %}
+                            {% set left_text = 'Добро' %}
+                            {% set right_text = 'пожаловать!' %}
+                        {% endif %}
+                   
+                    <div class="welcome_left">
+                        <div class="welcome_text_wrap">
+                            {{ left_text }}
+                        </div>
+                    </div>
+                    <div class="welcome_right">
+                        <div class="welcome_text_wrap">
+                            {{ right_text }}
+                        </div>
+                    </div>    
+                </div>
+                <img src="/assets/img/University-01.svg" alt="" class="university_logo">
+            </div>
+
+                {{ menus.desktop_menu(menu_items) }}
+            <div id="container">
+                             
+                {% block body %}{% endblock %}
 
             </div>
+            
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {% include 'default/profile.html.twig' %}
+            {% else %}
+                {% include 'default/fos_user_login_form.html.twig' %}
+            {% endif %}
+            
         </div>
 
-        <footer>
-            <div class="footer__content">
-                hi. im footer
-            </div>
-                
+        {% include "default/footer.html.twig" %}
 
-        </footer>
+    
+
 
     {% block javascripts %}
     {% endblock %}
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
         <script src="/assets/js/app.js"></script>
 
     </body>
+
+
+
+
+
+
 </html>

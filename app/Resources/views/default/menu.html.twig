@@ -1,0 +1,33 @@
+{% macro mobile_menu(menu_items) %}
+
+	<div class="menu__wrap">
+            <div class="background__fill"></div>
+
+            <div class="navigation__menu_mobile">
+                <ul>
+                    
+                    {% for item in menu_items %}
+
+                        <li class="navigation__menu_item_mobile hidden">
+                            <a href="{{ item[1] }}">
+                                <div class="navigation__menu_link">
+                                    {{item[0]}}
+                                </div>
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+{% endmacro %}
+
+{% macro desktop_menu(menu_items) %}
+    <div class="navigation__menu">
+        <ul>
+            {% for item in menu_items%}
+                <li class="navigation__menu_item"> <a href="{{ item[1] }}">{{item[0]}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
