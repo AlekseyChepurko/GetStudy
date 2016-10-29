@@ -70,6 +70,13 @@ class University
      */
     private $adress;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
 
     /**
      * Get id
@@ -247,6 +254,30 @@ class University
     public function getAdress()
     {
         return $this->adress;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return faculty
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
 
