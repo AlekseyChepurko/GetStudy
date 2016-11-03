@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="faculty")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\facultyRepository")
  */
-class faculty
+class Faculty
 {
     /**
      * @var int
@@ -63,6 +63,31 @@ class faculty
      */
     private $userRate;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\ManyToOne(targetEntity="University", inversedBy="faculties", cascade={"persist"})
+     */
+    private $university;
+
+     /**
+     * Get university
+     *
+     */
+    public function getUniversity()
+    {
+        return $this->university;
+    }
+
+    /**
+     * Set university
+     *
+     */
+    public function setUniversity(University $university)
+    {
+        $this->university = $university;
+    }
 
     /**
      * Get id

@@ -42,12 +42,6 @@ class University
      */
     private $userRate;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
-     */
-    private $city;
 
     /**
      * @var string
@@ -76,6 +70,44 @@ class University
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Faculty", mappedBy="university")
+    */
+    private $faculties;
+
+    /**
+    * @var string
+    * @ORM\ManyToOne(targetEntity="City", inversedBy="universities", cascade={"persist"})
+    */
+    private $city;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="site", type="string", length=255, unique=true)
+     */
+    private $site;    
+
+
+    /**
+     * Get faculties
+     *
+     */
+    public function getFaculties()
+    {
+        return $this->faculties;
+    }
+
+    /**
+     * Add City
+     *
+     */
+    public function addFaculties(Faculty $faculty)
+    {
+        array_push($this->faculties, $faculty);
+    }
 
 
     /**
@@ -110,6 +142,30 @@ class University
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set site
+     *
+     * @param string $site
+     *
+     * @return University
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return string
+     */
+    public function getSite()
+    {
+        return $this->site;
     }
 
     /**

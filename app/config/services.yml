@@ -4,18 +4,42 @@ services:
         class: AppBundle\Admin\CategoryAdmin
         arguments: [~, AppBundle\Entity\Category, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Category }
+            - { name: sonata.admin, manager_type: orm, label: Категории постов }
+    
+    admin.city:
+        class: AppBundle\Admin\CityAdmin
+        arguments: [~, AppBundle\Entity\City, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Города}
+
+    admin.region:
+        class: AppBundle\Admin\RegionAdmin
+        arguments: [~, AppBundle\Entity\Region, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Регионы}
+
+    admin.university:
+        class: AppBundle\Admin\UniversityAdmin
+        arguments: [~, AppBundle\Entity\University, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Университеты}
+
+    admin.faulty:
+        class: AppBundle\Admin\FacultyAdmin
+        arguments: [~, AppBundle\Entity\Faculty, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Факультеты}
 
     admin.post:
         class: AppBundle\Admin\PostAdmin
         arguments: [~, AppBundle\Entity\Post, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Post }
+            - { name: sonata.admin, manager_type: orm, label: Посты }
             
     admin.image:
         class: AppBundle\Admin\ImageAdmin
         arguments: [~, AppBundle\Entity\Image, 'SonataAdminBundle:CRUD']
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Image }
+            - { name: sonata.admin, manager_type: orm, label: Изображения }
         calls:
             - [ setTranslationDomain, [AppBundle]]

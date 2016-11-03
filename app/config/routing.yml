@@ -21,3 +21,7 @@ about_page:
 feedback_page:
   path: /feedback
   defaults: {_controller: AppBundle:FeedbackPage:show }
+
+universities_page:
+  path: /universities
+  defaults: {_controller: AppBundle:UniversitiesPage:show }

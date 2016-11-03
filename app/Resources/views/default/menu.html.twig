@@ -26,7 +26,7 @@
     <div class="navigation__menu">
         <ul>
             {% for item in menu_items%}
-                <li class="navigation__menu_item"> <a href="{{ item[1] }}">{{item[0]}}</a></li>
+                <li class="navigation__menu_item"> <a class="menu_link" href="{{ item[1] }}">{{item[0]}}</a></li>
             {% endfor %}
         </ul>
     </div>

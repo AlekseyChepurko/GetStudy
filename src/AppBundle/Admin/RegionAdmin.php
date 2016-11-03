@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class CategoryAdmin extends AbstractAdmin
+class RegionAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -26,6 +26,6 @@ class CategoryAdmin extends AbstractAdmin
 
     public function toString($object)
     {
-        return $object->getName() ? $object->getName() : "Category";
+        return $object->getName() ? $object->getName() : "Reginon";
     }
 }

@@ -28,7 +28,7 @@ class PostAdmin extends AbstractAdmin
                     'property' => 'name',
                 ))
           
-        ->end()
+            ->end()
     ;
     }
 
