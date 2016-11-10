@@ -7,4 +7,8 @@
   <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
   <button type="submit"> Войти</button>
   <a href="/" class="registration_link">Регистрация</a>
+
+  {% if error %}
+  		<div class="auth_error"> Неправильные логин или пароль </div>
+  {% endif %}
 </form>
