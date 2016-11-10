@@ -25,3 +25,7 @@ feedback_page:
 universities_page:
   path: /universities
   defaults: {_controller: AppBundle:UniversitiesPage:show }
+
+university_page:
+  path: /universities/{university}
+  defaults: {_controller: AppBundle:UniversitiesPage:showUniversity }
