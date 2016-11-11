@@ -122,10 +122,13 @@
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {% include 'default/profile.html.twig' %}
             {% else %}
+
                 {% include 'default/fos_user_login_form.html.twig' %}
             {% endif %}
             
         </div>
+
+
 
         {% include "default/footer.html.twig" %}
 
