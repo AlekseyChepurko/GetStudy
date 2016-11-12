@@ -86,6 +86,22 @@ class Post
         return $this->category;
     }
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", inversedBy="post")
+     */
+    private $comments;
+
+    public function getComments(){
+        return $this->comments;
+    }
+
+    public function addComment(\AppBundle\Entity\Comment $comment){
+        
+        $this->comments[] = $comment;
+        return $this;
+    }
+
     /**
      * Get id
      *
