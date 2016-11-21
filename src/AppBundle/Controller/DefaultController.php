@@ -17,8 +17,7 @@ class DefaultController extends Controller
     //private $error;
     private $request;
     private $session;
-
-
+    
     public function getAuthError(Request $request){
          // Geting auth error
         $this->session = $request->getSession();
@@ -43,7 +42,6 @@ class DefaultController extends Controller
         // last username entered by the user
         $lastUsername = (null === $this->session) ? '' : $this->session->get($lastUsernameKey);
         $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
-
         return $error;
     }
 

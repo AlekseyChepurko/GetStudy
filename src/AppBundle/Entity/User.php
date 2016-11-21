@@ -23,4 +23,20 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
+
+    // /**
+    //  * @var decimal
+    //  *
+    //  * @ORM\Column(name="rate", type="decimal")
+    //  */
+    // protected $rate;
+
+    // public function getRate(){
+    //     $this->rate;
+    // }
+
+    // public function setRate($rate){
+    //     $this->rate = $rate;
+    // }
+
 }

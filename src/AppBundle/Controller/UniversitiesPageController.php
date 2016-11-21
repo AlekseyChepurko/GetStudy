@@ -14,9 +14,6 @@ class UniversitiesPageController extends DefaultController {
 
 		$em = $this->getDoctrine()->getManager();
        
-        // $universities = $em
-        //     ->getRepository('AppBundle:University')
-        //     ->findAll();
 
 		$universities = $em->createQuery('
 							SELECT DBuniversity FROM AppBundle:University DBuniversity
@@ -37,6 +34,7 @@ class UniversitiesPageController extends DefaultController {
 	*/
 	public function showUniversityAction($university, Request $request){
 		$em = $this->getDoctrine()->getManager();
+		
 		$DBuniversity = $em
             ->getRepository('AppBundle:University')
             ->findOneBy(
