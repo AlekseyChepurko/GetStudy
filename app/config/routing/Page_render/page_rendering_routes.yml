@@ -1,0 +1,31 @@
+index_page:
+  path: /
+  defaults: {_controller: AppBundle:IndexPage:show }
+
+about_page:
+  path: /about
+  defaults: {_controller: AppBundle:AboutPage:show }
+
+feedback_page:
+  path: /feedback
+  defaults: {_controller: AppBundle:FeedbackPage:show }
+
+universities_page:
+  path: /universities
+  defaults: {_controller: AppBundle:UniversitiesPage:show }
+
+university_page:
+  path: /universities/{university}
+  defaults: {_controller: AppBundle:UniversitiesPage:showUniversity }
+
+
+posts_common:
+  path: /post
+
+post_page:
+  path: /post/{postId}
+  defaults: {_controller: AppBundle:Post:showPost }
+
+subjects_page:
+  path: /subjects
+  defaults: {_controller: AppBundle:SubjectPage:showSubjects }

@@ -14,22 +14,15 @@ _sonata_admin:
     type: sonata_admin
     prefix: /admin
 
-index_page:
-  path: /
-  defaults: {_controller: AppBundle:IndexPage:show }
+page_render_routes:
+  resource: "routing/Page_render/page_rendering_routes.yml"
+  type: yaml
 
-about_page:
-  path: /about
-  defaults: {_controller: AppBundle:AboutPage:show }
+comment_routes:
+  resource: "routing/Comments/commenting_routes.yml"
+  type: yaml
 
-feedback_page:
-  path: /feedback
-  defaults: {_controller: AppBundle:FeedbackPage:show }
-
-universities_page:
-  path: /universities
-  defaults: {_controller: AppBundle:UniversitiesPage:show }
-
-university_page:
-  path: /universities/{university}
-  defaults: {_controller: AppBundle:UniversitiesPage:showUniversity }
+form_routes:
+  prefix: /form
+  type: yaml
+  resource: "routing/Forms/comment_form_routes.yml"

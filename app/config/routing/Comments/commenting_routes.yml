@@ -1,0 +1,7 @@
+NewPostComment:
+  path: /NewPostComment
+  defaults: {_controller: AppBundle:Comment:NewPostComment }
+
+NewCommentComment:
+  path: /NewCommentComment
+  defaults: {_controller: AppBundle:Comment:NewCommentComment}
