@@ -24,7 +24,7 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Университеты}
 
-    admin.faulty:
+    admin.faculty:
         class: AppBundle\Admin\FacultyAdmin
         arguments: [~, AppBundle\Entity\Faculty, ~]
         tags:
@@ -43,3 +43,9 @@ services:
             - { name: sonata.admin, manager_type: orm, label: Изображения }
         calls:
             - [ setTranslationDomain, [AppBundle]]
+
+    admin.subject:
+        class: AppBundle\Admin\SubjectAdmin
+        arguments: [~, AppBundle\Entity\Subject, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Предметы}
