@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Post;
 use AppBundle\Form\ImageType;
 
-class PostController extends Controller
+class PostController extends DefaultController
 {
     /**
      * @Route("/post/new", name="app_post_new")
@@ -44,5 +44,32 @@ class PostController extends Controller
         return $this->render('post/new.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+
+    /**
+    * @Route("/post/{postId}")  
+    */
+
+    public function showPost($postId, Request $request){
+        $em = $this->getDoctrine()->getManager();
+
+        $post = $em
+                ->getRepository('AppBundle:Post')
+                ->findOneBy(array(
+                    'id' => $postId,
+                    ));
+
+        $authError = $this->getAuthError($request);
+
+        return $this->render('default/post.html.twig', array(
+            'post' => $post,
+            'error' => $authError,
+            ));
+    }
+
+
+    public function createCommentFormAction() {
+        var_dump("expression");
     }
 }
