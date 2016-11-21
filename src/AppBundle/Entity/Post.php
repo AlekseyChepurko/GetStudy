@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Entity;
+use AppBundle\Entity\Comment;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -45,22 +47,38 @@ class Post
 
 
     /**
-     * @var string
-     *
-     * @ORM\ManyToOne(targetEntity="Image", inversedBy="Posts", cascade={"persist"})
-     */
-    private $image;
+    * @ORM\ManyToMany(targetEntity="Image", inversedBy="Posts", indexBy="id")
 
-    public function getImage() {
-        return $this->image;
+    * @ORM\JoinTable(name="PostsToImages",
+        * joinColumns={
+        *       @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+        *    },
+        * inverseJoinColumns={
+        *       @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+        *    }
+        *)
+    */
+    private $images;
+
+    public function getImages() {
+        return $this->images;
     }
 
     public function md5name(){
         return $this->getImage()->md5name;
     }
 
-    public function setImage($image){
-        $this->image = $image;
+    public function addImage($image){
+        $this->images[$image->getId()] = $image;
+        return $this;
+    }
+
+    public function removeImage($image){
+        $this->images->removeElement($image);
+    }
+
+    public function setImages($images){
+        $this->images = $images;
     }
 
     /**
@@ -86,9 +104,19 @@ class Post
         return $this->category;
     }
 
+    
+    private $commentForm;
+    function __construct(){
+        $this->comments = new ArrayCollection();
+        $this->images = new ArrayCollection();
+
+        // $comment = new Comment();
+
+        // $this->commentForm = $this->createFormBuilder($comment);
+    }
 
     /**
-     * @ORM\OneToMany(targetEntity="Comment", inversedBy="post")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     private $comments;
 
@@ -97,10 +125,11 @@ class Post
     }
 
     public function addComment(\AppBundle\Entity\Comment $comment){
-        
+
         $this->comments[] = $comment;
         return $this;
     }
+
 
     /**
      * Get id

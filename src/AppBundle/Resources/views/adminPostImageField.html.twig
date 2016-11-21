@@ -2,8 +2,10 @@
 
 {% block field%}
 	
-	{% if object.image != null %}
-    	<img class = "image" src={{'/images/'~object.image.md5name}} >
+	{% if object.images == null %}
+		{% for image in object.images %}
+	    	<img class = "image" src={{'/images/'~image.md5name}} >
+		{% endfor %}
     {% endif %}
 	<link rel="stylesheet" href="/css/postAdmin.css">
 {% endblock %}

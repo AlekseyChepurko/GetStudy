@@ -19,7 +19,10 @@ class PostAdmin extends AbstractAdmin
                 ))
                     ->add('title', 'text')
                     ->add('body', 'textarea')
-                    ->add('image', 'sonata_type_admin', array('delete'=>false))
+                    // ->add('images', 'sonata_type_admin', array('delete'=>false))
+                    ->add('images', 'sonata_type_model', array('expanded' => true, 'by_reference' => false, 'multiple' => true,
+                        'property'=>"name"
+                ))
             ->end()
         
             ->with('Meta data', array('class' => 'col-md-3'))
@@ -68,21 +71,26 @@ class PostAdmin extends AbstractAdmin
         
         foreach ($this->getFormFieldDescriptions() as $fieldName => $fieldDescription) {
             // detect embedded Admins that manage Images
-            if ($fieldDescription->getType() === 'sonata_type_admin' &&
+            if ($fieldDescription->getType() === 'sonata_type_model' &&
                 ($associationMapping = $fieldDescription->getAssociationMapping()) &&
                 $associationMapping['targetEntity'] === 'AppBundle\Entity\Image'
             ) {
                 $getter = 'get' . ucfirst($fieldName);
                 $setter = 'set' . ucfirst($fieldName);
-                /** @var Image $image */
-                $image = $post->$getter();
-                if ($image) {
-                    if ($image->getFile()) {
-                        // update the Image to trigger file management
-                        $image->refreshUpdated();
-                    } elseif (!$image->getFile() && !$image->getName()) {
-                        // prevent Sf/Sonata trying to create and persist an empty Image
-                        $post->$setter(null);
+                $images = $post->$getter()->toArray();
+                if ($images) {
+                    foreach ($images as $image) {
+
+                        # code...
+                        // if ($image->getFile()) {
+                            // update the Image to trigger file management
+                            $post->addImage($image);
+                            $image->setPost($post);
+                            $image->refreshUpdated();
+                        // } elseif (!$image->getFile() && !$image->getName()) {
+                        //     // prevent Sf/Sonata trying to create and persist an empty Image
+                        //     $post->$setter(null);
+                        // }
                     }
                 }
             }

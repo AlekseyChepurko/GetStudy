@@ -34,9 +34,8 @@ class Image{
      */
     private $updated;
 
-    /**
-    * @ORM\OneToMany(targetEntity="Post", mappedBy="image")
-    */
+    
+
     private $Posts;
 
     /**
@@ -70,7 +69,7 @@ class Image{
 
     public function __construct()
     {
-        $this->Posts = new ArrayCollection();
+        // $this->Posts = new ArrayCollection();
     }
 
     public function getName(){
@@ -83,7 +82,8 @@ class Image{
      * @param UploadedFile $file
      */
     public function setFile( $file = null)  // file shoule be an uploadedfile class
-    {
+    {   
+        // var_dump("jndfvsv");
         $this->file = $file;
     }
 
@@ -169,38 +169,31 @@ class Image{
         return $this;
     }
 
-    /**
-     * Add post
-     *
-     * @param \AppBundle\Entity\Post $post
-     *
-     * @return Image
-     */
-    public function addPost(\AppBundle\Entity\Post $post)
+
+    public function setPost(\AppBundle\Entity\Post $post)
     {
-        $this->Posts[] = $post;
+        $this->Post = $post;
 
         return $this;
     }
 
-    /**
-     * Remove post
-     *
-     * @param \AppBundle\Entity\Post $post
-     */
-    public function removePost(\AppBundle\Entity\Post $post)
-    {
-        $this->Posts->removeElement($post);
-    }
+    // /**
+    //  * Remove post
+    //  *
+    //  * @param \AppBundle\Entity\Post $post
+    //  */
+    // public function removePost(\AppBundle\Entity\Post $post)
+    // {
+    //     $this->Posts->removeElement($post);
+    // }
 
     /**
-     * Get posts
+     * Get post
      *
-     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPosts()
+    public function getPost()
     {
-        return $this->Posts;
+        return $this->Post;
     }
 
     /**
