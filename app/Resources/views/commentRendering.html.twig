@@ -1,0 +1,47 @@
+{% macro renderComments (comment) %}
+	<a href="" class="comment_form_toggler">Ответить</a>
+	<form action="/NewCommentComment" class="post_comment_form hidden">
+		<div >Ответить на комментарий:</div>
+		<input type="text" name="commentText" required="true">
+		<input type="submit" class="submit_btn" value="Ответить">
+		<input type="hidden" name="parentCommentId" value="{{comment.id}}">
+	</form>
+
+	
+	{% if comment.childComments is empty %}
+		{# null #}
+	{% else %}
+		<ul class="post_comments">
+			{% for childComment in comment.childComments | reverse %}
+				<li class="post_comment">
+					<div class="comment_wrap">
+						
+						<div class="author">
+							{{childComment.author}}
+							{# {{childComment.creationTime}} #}
+						</div>
+						{# <a href="{{path('posts_common')}}/{{childComment.id}}#comments" class="comment_link">ссылка</a> #}
+						<div class="comment">
+							{{childComment.text}}
+						</div>
+					</div>
+					{{ _self.renderComments(childComment) }}
+				</li>
+			{% endfor %}
+
+		</ul>
+	{% endif %}
+
+{% endmacro %}
+
+{% macro renderCommentForm(post) %}
+
+	<div class="comment__form_wrap">
+        <form action={{ path("NewPostComment") }} class="add_comment_form" method="post">
+            <div class="commetn_head">Комментировать новость:</div>
+            <input type="text" class="commentText" required="true" name = "commentText">
+            <input type="submit" class="submit__btn">
+            <input type="hidden" name="postId" value="{{ post.id }}">
+        </form>
+    </div>
+{% endmacro %}

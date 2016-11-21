@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
-    
-    <div class="posts_wrap">
-        
-        {% for post in posts %}
-            <div class="post"> 
+	<div class="post"> 
 
                 <div class="post_title">
                     <div class="title">
@@ -20,18 +17,19 @@
                     {{ post.body }}
                 </div>
                 
-                {% if post.images %}
-                    {% for image in post.images %}
-                        <img src={{'/images/'~image.md5name}} alt="" class="img-responsive">
-                    {% endfor %}
+                {% if post.image%}
+                    <img src={{'/images/'~post.image.md5name}} alt="" class="img-responsive">
                 {% endif %}
                 
-                <a href="{{ path('posts_common') }}/{{ post.id }}#comments" class="post_comments link"><i class="fa fa-6 fa-comments" aria-hidden="true"></i></a>
-{# 
+                {# <a href="{{ path('posts_common') }}/{{ post.id }}" class="post_comments link"><i class="fa fa-6 fa-comments" aria-hidden="true"></i></a> #}
+
+
+
+            </div>
                 {% import "commentRendering.html.twig" as commentRender %}
                 {{commentRender.renderCommentForm(post)}}
                 
-                <div class="comments_header">Комментарии к новости</div>
+                <div class="comments_header" id='comments'>Комментарии к новости</div>
 
                 <ul class="post_comments">
                     {% for comment in post.comments | reverse %}
@@ -44,16 +42,28 @@
                             {{commentRender.renderComments(comment)}}
                         </li>
                     {% endfor %}
-                </ul> #}
-
-
-            </div>
-        {% endfor %}
-    
-    </div>
-
-
-
+                </ul>
+	
+    <script>
+        $(".submit__btn").click(function(e){
+            e.preventDefault();
+            var form = $(this).parent().serialize();
+            $.post({
+                data: form,
+                url: "/NewPostComment",
+                success: function(e){
+                	console.log("yupi");
+                    // console.log(e);
+                },
+                fail: function(e){
+                	console.log("nope");
+                    // console.log(e);
+                }
+            });
+        });
+    </script>   
 {% endblock %}
 
-{% block title %}Get Study{% endblock %}
+
+{% block title %}{{post.title}}|Комментарии{% endblock %}
+
