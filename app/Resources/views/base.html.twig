@@ -57,7 +57,9 @@
     </head>
 
     {% import "default/menu.html.twig" as menus %}
-    {% set menu_items = [["Главная", "/"], ["Университеты", "/universities"], ["О проекте", "/about"], ["Отзывы", "/feedback"]] %}
+
+    {# menu item = ["name", "path"] #}
+    {% set menu_items = [["Главная", "/"], ["Университеты", path('universities_page')], ["Подготовка к экзаменам", path("subjects_page")] , ["О проекте", path("about_page")], ["Отзывы", path("feedback_page")]] %}
 
     <body>
 
@@ -70,10 +72,10 @@
                 </div>
             </div>
     
-            <svg class = "header__svg_image" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            {# <svg class = "header__svg_image" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                  viewBox="0 0 1280 70" enable-background="new 0 0 1280 70" xml:space="preserve" preserveAspectRatio="none">
                 <polygon points="640,50 1280,0 0,0 "/>
-            </svg>
+            </svg> #}
 
             <div class="navigation__bar">
                 <div class="nav__item"></div>
