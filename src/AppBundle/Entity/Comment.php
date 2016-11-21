@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Comment
@@ -35,6 +37,52 @@ class Comment
      */
     private $text;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+     */
+    private $post;
+
+    /**
+     * @Assert\DateTime()
+     */
+    protected $creationTime;
+
+
+    /**
+    *   @ORM\OneToMany(targetEntity="Comment", mappedBy="parentComment")
+    */
+    private $childComments;
+
+    public function getChildComments(){
+        return $this->childComments;
+    }
+
+    public function addChildComment(Comment $comment){
+        $this->childComments[] = $comment;
+    }
+
+    /**
+    *   @ORM\ManyToOne(targetEntity="Comment", inversedBy="childComments")
+    *   @ORM\JoinColumn(name="parentComment_id", referencedColumnName="id")
+    */
+    private $parentComment;
+
+    public function setParentComment(Comment $comment){
+        $this->parentComment = $comment;
+
+        return $this;
+    }
+
+
+    public function setPost (Post $post){
+        $this->post = $post;
+        return $this;
+    }
+
+    public function getPost(){
+        return $this->post;
+    }
 
     /**
      * Get id
@@ -92,6 +140,10 @@ class Comment
     public function getText()
     {
         return $this->text;
+    }
+
+    public function __construct(){
+        $this->childComments = new ArrayCollection();
     }
 }
 
