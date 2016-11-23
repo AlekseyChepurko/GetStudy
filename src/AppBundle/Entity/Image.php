@@ -111,7 +111,7 @@ class Image{
 
         // move takes the target directory and target filename as params
         $md5Name = $this->getFile()->getClientOriginalName();
-        $md5Name = md5($md5Name).'.'.$this->getFile()->guessExtension();
+        $md5Name = md5($md5Name).uniqid().'.'.$this->getFile()->guessExtension();
         $this->getFile()->move(
             Image::SERVER_PATH_TO_IMAGE_FOLDER,
             $md5Name
