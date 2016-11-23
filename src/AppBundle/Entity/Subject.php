@@ -31,6 +31,8 @@ class Subject
      */
     private $name;
 
+    
+
     /**
     * @ORM\OneToMany(targetEntity="Task", mappedBy="subject")
     */

@@ -35,6 +35,22 @@
      */
     private $taskText;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="useState", type="boolean")
+     */
+    private $useState; //united state exam
+
+    public function setUseState($state=false){
+        $this->useState = $state;
+    }   
+
+    public function getUseState()
+    {
+        return $this->useState;
+    }
+
     public function getTaskText(){
     	return $this->taskText;
     }

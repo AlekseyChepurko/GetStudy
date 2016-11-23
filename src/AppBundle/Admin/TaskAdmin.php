@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class TaskAdmin extends AbstractAdmin
 {
@@ -16,6 +17,13 @@ class TaskAdmin extends AbstractAdmin
                 ->add('taskText', 'text', array(
                     'label'=>'Текст задания'
                     ))
+                ->add('useState',  ChoiceType::class, array(
+                'choices'=> array(
+                    'ЕГЭ' => true,
+                    'ГИА' => false
+                    ),
+                'label' => 'Тип экзамена',
+                ))
             ->end()
 
             ->with('Выбрать предмет', array('class' => 'col-md-3'))
@@ -30,16 +38,36 @@ class TaskAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('taskText');
+        $datagridMapper
+            ->add('useState', 'doctrine_orm_boolean', array('label' => 'Тип экзамена'), null, array(
+                'choices'=>array(
+                    'ЕГЭ'=>true,
+                    'ГИА'=>false
+                    )
+                ))
+            ->add('subject', null, array('label'=>"Предмет"), 'entity', array(
+            'class' => 'AppBundle\Entity\Subject',
+            'choice_label' => 'name',
+            ))
+        ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('taskText');
+        $listMapper
+            ->addIdentifier('taskText')
+            ->add('subject.name')
+            ->add('useState', 'choice', array(
+                'choices' => array(
+                    false => 'ГИА',
+                    true => 'ЕГЭ',
+                    )
+                ))
+            ;
     }
 
-    public function toString($object)
-    {
-        return $object->getName() ? $object->getName() : "Task";
-    }
+    // public function toString($object)
+    // {
+    //     return $object->getName() ? $object->getName() : "Task";
+    // }
 }
