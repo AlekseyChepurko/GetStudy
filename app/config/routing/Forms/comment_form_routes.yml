@@ -1,3 +1,0 @@
-post_comment_form:
-  path: /getPostCommentForm
-  defaults: { _controller: AppBundle:Post:createCommentForm }
