@@ -4,8 +4,12 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Entity\Post;
+use AppBundle\Entity\Comment;
 use AppBundle\Form\ImageType;
+
 
 class PostController extends DefaultController
 {
@@ -62,14 +66,44 @@ class PostController extends DefaultController
 
         $authError = $this->getAuthError($request);
 
+
+        $comment  = new Comment();
+        
+        $postCommentForm = $this->createFormBuilder($comment)
+            ->add('text', TextType::class, [
+                'label' => "Комментарий к посту",
+                'attr'=> ["class"=>"comment__wrap post_comment_form_text",
+                        ]
+                ])
+            ->add('post', TextType::class, [
+                'attr'=> ["id"=>"postId"]
+                ])
+            ->add('save', SubmitType::class, array(
+                'label' => 'Отправить комментарий',
+                ))
+        ->getForm();
+
+        $commentCommentForm = $this->createFormBuilder($comment)
+            ->add('text', TextType::class, [
+                'label' => "Ответ на комментарий",
+                'attr'=> ["class"=>"comment__wrap comment_comment_form_text"]
+                ])
+            ->add('parentComment', TextType::class, [
+                'attr'=> ["id"=>"commentId"]
+                ])
+            ->add('save', SubmitType::class, array(
+                'label' => 'Отправить',
+                ))
+        ->getForm();
+
         return $this->render('default/post.html.twig', array(
             'post' => $post,
             'error' => $authError,
+            'postCommentForm' => $postCommentForm->createView(),
+            'commentCommentForm' => $commentCommentForm->createView(),
             ));
     }
 
 
-    public function createCommentFormAction() {
-        var_dump("expression");
-    }
+
 }

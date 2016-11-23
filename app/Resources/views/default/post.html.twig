@@ -2,7 +2,15 @@
 
 
 {% block body %}
-	<div class="post"> 
+    {{ form_start(postCommentForm) }}
+    {{ form_widget(postCommentForm, {'attr':{'class':'post_comment_form'}}) }}
+    {{ form_end(postCommentForm) }}
+
+    {{ form_start(commentCommentForm) }}
+    {{ form_widget(commentCommentForm, {'attr':{'class':'comment_comment_form'}}) }}
+    {{ form_end(commentCommentForm) }}
+
+	<div class="post" post-id={{ post.id }}> 
 
                 <div class="post_title">
                     <div class="title">
@@ -17,33 +25,34 @@
                     {{ post.body }}
                 </div>
                 
-                {% if post.image%}
-                    <img src={{'/images/'~post.image.md5name}} alt="" class="img-responsive">
+                {% if post.images%}
+                    <div class="post_images">
+                        {% for image in post.images %}
+                            <img src={{'/images/'~image.md5name}} alt="" class="img-responsive">
+                        {% endfor %}
+                    </div>
                 {% endif %}
-                
-                {# <a href="{{ path('posts_common') }}/{{ post.id }}" class="post_comments link"><i class="fa fa-6 fa-comments" aria-hidden="true"></i></a> #}
 
 
+            {% import "commentRendering.html.twig" as commentRender %}
+            {{commentRender.renderCommentForm(post)}}
+            
+            <div class="comments_header" id='comments'>Комментарии к новости</div>
 
-            </div>
-                {% import "commentRendering.html.twig" as commentRender %}
-                {{commentRender.renderCommentForm(post)}}
-                
-                <div class="comments_header" id='comments'>Комментарии к новости</div>
+            <ul class="post_comments">
+                {% for comment in post.comments | reverse %}
+                    <li class="post_comment" comment-id={{comment.id}}>
+                        <div class="comment_wrap">
+                            
+                            <div class="author">{{ comment.author }}</div>
+                            <div class="comment">{{comment.text}}</div>
+                        </div>
+                        {{commentRender.renderComments(comment)}}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
 
-                <ul class="post_comments">
-                    {% for comment in post.comments | reverse %}
-                        <li class="post_comment">
-                            <div class="comment_wrap">
-                                
-                                <div class="author">{{ comment.author }}</div>
-                                <div class="comment">{{comment.text}}</div>
-                            </div>
-                            {{commentRender.renderComments(comment)}}
-                        </li>
-                    {% endfor %}
-                </ul>
-	
     <script>
         $(".submit__btn").click(function(e){
             e.preventDefault();
