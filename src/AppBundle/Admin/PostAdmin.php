@@ -51,9 +51,9 @@ class PostAdmin extends AbstractAdmin
         $listMapper->addIdentifier('body');
         $listMapper->add('category.name');
         $listMapper->add('updated');
-        $listMapper->add('image', 'file', array(
-            'template'=> 'AppBundle::adminPostImageField.html.twig'
-            ));
+        // $listMapper->add('image', 'file', array(
+        //     'template'=> 'AppBundle::adminPostImageField.html.twig'
+        //     ));
     }
 
     public function prePersist($post) {

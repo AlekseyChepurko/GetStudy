@@ -74,6 +74,10 @@ class Comment
         return $this;
     }
 
+    public function getParentComment(){
+        return $this->parentComment;
+    }
+
 
     public function setPost (Post $post){
         $this->post = $post;
