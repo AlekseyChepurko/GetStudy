@@ -28,7 +28,8 @@
         "php-console/php-console": "^3.1",
         "sonata-project/admin-bundle": "^3.8",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "jms/serializer-bundle": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
