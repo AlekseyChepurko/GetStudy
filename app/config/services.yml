@@ -55,3 +55,9 @@ services:
         arguments: [~, AppBundle\Entity\Task, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Задания}
+
+    admin.taskType:
+        class: AppBundle\Admin\TaskTypeAdmin
+        arguments: [~, AppBundle\Entity\TaskType, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Типы заданий}
