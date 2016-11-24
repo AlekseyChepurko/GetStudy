@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 
 class TaskTypeAdmin extends AbstractAdmin
@@ -13,24 +14,64 @@ class TaskTypeAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name', 'text', array(
-                'label' => "Тип задания"
+            ->with('Задание', array(
+                'class' => 'col-md-4'
                 ))
+                ->add('taskLevel',  ChoiceType::class, array(
+                    'choices'=> array(
+                        'B' => 'B',
+                        'A' => 'A',
+                        'C' => 'C'
+                        ),
+                    'label' => 'Сложность задания (часть)',
+                    ))
+                ->add('taskNumber', 'integer', array(
+                    'label' => "Номер задания"
+                    ))
+                ->add('name', 'text', array(
+                    'label' => "Тип задания (название)"
+                    ))
+            ->end()
+
+            ->with('Предмет', array(
+                'class' => 'col-md-5'
+                ))
+                ->add('subject', 'sonata_type_model_list', array(
+                    'label' => 'Предмет',
+                    "btn_list" => 'Список предметов',
+                    'btn_add' => 'Добавить предмет',
+                    "btn_delete" => 'Очистить выбор'
+                    ))
+            ->end()
             ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
-
+            ->add('subject', null, array(), 'entity', array(
+                'class' => 'AppBundle\Entity\Subject',
+                'choice_label' => 'name'
+                ))
+            // ->add('taskLevel', 'doctrine_orm_choice', array('label' => 'Сложность задания (часть)'), null, array(
+            //     'data'=>array(
+            //         'B' => 'B',
+            //         'A' => 'A',
+            //         'C' => 'C'
+            //         )
+            //     ))
+            ->add('taskLevel')
+            ->add('taskNumber', 'doctrine_orm_number')
             ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
+            ->addIdentifier('name', null, array())
+            ->add('subject.name')
+            ->add('taskLevel')
+            ->add('taskNumber')
         ;
     }
 

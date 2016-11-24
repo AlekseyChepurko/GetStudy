@@ -28,6 +28,41 @@ class TaskType
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="taskLevel", type="string", length=1)
+     */
+    private $taskLevel;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="taskNumber", type="integer")
+     */
+    private $taskNumber;
+
+    public function getTaskLevel()
+    {
+        return $this->taskLevel;
+    }
+
+    public function setTaskLevel($level)
+    {
+        $this->taskLevel = strtoupper($level);
+        return $this;
+    }
+
+    public function getTaskNumber()
+    {
+        return $this->taskNumber;
+    }
+
+    public function setTaskNumber($number)
+    {
+        $this->taskNumber = $number;
+        return $this;
+    }
 
     /**
      * Get id
@@ -44,12 +79,28 @@ class TaskType
     */
     private $task;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Subject", inversedBy="taskTypes")
+    */
+    private $subject;
+
+    public function setSubject(\AppBundle\Entity\Subject $subject)
+    {
+        $this->subject = $subject;
+        return $this;
+    }
+
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
     public function getTask()
     {
         return $this->task;
     }
 
-    public function setTask(AppBundle\Entity\Task $task)
+    public function setTask(\AppBundle\Entity\Task $task)
     {
         $this->task = $task;
         return $this;
