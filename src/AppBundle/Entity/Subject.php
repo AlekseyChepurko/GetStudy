@@ -38,8 +38,25 @@ class Subject
     */
     private $tasks;
 
+    /**
+    * @ORM\OneToMany(targetEntity="TaskType", mappedBy="subject")
+    */
+    private $taskTypes;
+
+    public function getTaskTypes()
+    {
+        return $this->taskTypes;
+    }
+
+    public function addTaskType(\AppBundle\Entity\TaskType $taskType)
+    {
+            $this->taskTypes[] = $taskType;
+            return $this;
+    }
+
     public function __construct(){
     	$this->tasks = new ArrayCollection();
+        $this->taskTypes = new ArrayCollection();
     }
 
     public function addTask(\AppBundle\Entity\Task $task){
