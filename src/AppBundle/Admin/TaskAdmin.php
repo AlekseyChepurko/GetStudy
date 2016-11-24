@@ -14,21 +14,31 @@ class TaskAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Содержание задания', array())
-                ->add('type',  ChoiceType::class, array(
+                ->add('level',  ChoiceType::class, array(
                 'choices'=> array(
                     'B' => 'B',
                     'A' => 'A',
                     'C' => 'C'
                     ),
-                'label' => 'Тип задания',
+                'label' => 'Сложность задания (часть)',
                 ))
-
+                ->add('type',  ChoiceType::class, array(
+                    'choices'=> array(
+                        'B' => 'B',
+                        'A' => 'A',
+                        'C' => 'C'
+                        ),
+                    'label' => 'Тип задания',
+                    ))
                 ->add('number', null, array(
                     'label'=>'Номер задания'
                     ))
 
                 ->add('taskText', 'text', array(
                     'label'=>'Текст задания'
+                    ))
+                ->add('answer', 'text', array(
+                    'label'=>'Ответ'
                     ))
             ->end()
 
@@ -58,7 +68,7 @@ class TaskAdmin extends AbstractAdmin
                     'ГИА'=>false
                     )
                 ))
-            ->add('type', 'doctrine_orm_boolean', array('label' => 'Тип задания'), null, array(
+            ->add('level', 'doctrine_orm_boolean', array('label' => 'Сложность задания (часть)'), null, array(
                 'choices'=>array(
                     'B' => 'B',
                     'A' => 'A',
@@ -78,8 +88,10 @@ class TaskAdmin extends AbstractAdmin
         $listMapper
             ->add('id')
             ->addIdentifier('taskText')
-            ->add('type')
+            ->add('level')
             ->add('number')
+            ->add('type')
+            ->add('answer')
             ->add('subject.name')
             ->add('useState', 'choice', array(
                 'choices' => array(

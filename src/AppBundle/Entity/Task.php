@@ -46,9 +46,17 @@
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=1)
+     * @ORM\Column(name="level", type="string", length=1)
      */
-    private $type; // A, B, C
+    private $level; // A, B, C
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string")
+     */
+    private $type;
 
     /**
      * @var int
@@ -57,15 +65,48 @@
      */
     private $number;
 
+        
+     /**
+     * @var text
+     *
+     * @ORM\Column(name="answer", type="text")
+     */
+    private $answer;
+
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+        return $this;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    public function setLevel($level="A")
+    {
+        if (is_string($level))
+            $this->level = strtoupper($level);
+        
+        return $this; 
+    }
+
+
     public function getType()
     {
         return $this->type;
     }
 
-    public function setType($type="A")
+    public function setType($type)
     {
         if (is_string($type))
-            $this->type = strtoupper($type);
+            $this->type = $type;
         
         return $this; 
     }
