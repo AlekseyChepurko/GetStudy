@@ -14,16 +14,22 @@ class TaskAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Содержание задания', array())
+                ->add('type',  ChoiceType::class, array(
+                'choices'=> array(
+                    'B' => 'B',
+                    'A' => 'A',
+                    'C' => 'C'
+                    ),
+                'label' => 'Тип задания',
+                ))
+
+                ->add('number', null, array(
+                    'label'=>'Номер задания'
+                    ))
+
                 ->add('taskText', 'text', array(
                     'label'=>'Текст задания'
                     ))
-                ->add('useState',  ChoiceType::class, array(
-                'choices'=> array(
-                    'ЕГЭ' => true,
-                    'ГИА' => false
-                    ),
-                'label' => 'Тип экзамена',
-                ))
             ->end()
 
             ->with('Выбрать предмет', array('class' => 'col-md-3'))
@@ -31,6 +37,13 @@ class TaskAdmin extends AbstractAdmin
                     'class' => 'AppBundle\Entity\Subject',
                     'property' => 'name',
                     'label'=>'Предмет'
+                ))
+                ->add('useState',  ChoiceType::class, array(
+                'choices'=> array(
+                    'ЕГЭ' => true,
+                    'ГИА' => false
+                    ),
+                'label' => 'Тип экзамена',
                 ))
           
             ->end();
@@ -45,6 +58,14 @@ class TaskAdmin extends AbstractAdmin
                     'ГИА'=>false
                     )
                 ))
+            ->add('type', 'doctrine_orm_boolean', array('label' => 'Тип задания'), null, array(
+                'choices'=>array(
+                    'B' => 'B',
+                    'A' => 'A',
+                    'C' => 'C'
+                    )
+                ))
+            ->add('number', null, array('label'=>"Номер задания"))
             ->add('subject', null, array('label'=>"Предмет"), 'entity', array(
             'class' => 'AppBundle\Entity\Subject',
             'choice_label' => 'name',
@@ -55,7 +76,10 @@ class TaskAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('id')
             ->addIdentifier('taskText')
+            ->add('type')
+            ->add('number')
             ->add('subject.name')
             ->add('useState', 'choice', array(
                 'choices' => array(

@@ -40,7 +40,46 @@
      *
      * @ORM\Column(name="useState", type="boolean")
      */
-    private $useState; //united state exam
+    private $useState; //united state exam or not
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=1)
+     */
+    private $type; // A, B, C
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="number", type="integer")
+     */
+    private $number;
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type="A")
+    {
+        if (is_string($type))
+            $this->type = strtoupper($type);
+        
+        return $this; 
+    }
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    public function setNumber($number=1)
+    {
+        $this->number = $number;
+        return $this;
+    }
 
     public function setUseState($state=false){
         $this->useState = $state;
