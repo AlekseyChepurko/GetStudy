@@ -76,7 +76,7 @@
         return $this->taskType;
     }
 
-    public function setTaskType(AppBundle\Entity\TaskType $taskType)
+    public function setTaskType(\AppBundle\Entity\TaskType $taskType)
     {
         $this->taskType = $taskType;
         return $this;
