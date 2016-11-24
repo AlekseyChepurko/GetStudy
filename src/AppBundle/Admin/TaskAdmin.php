@@ -27,11 +27,12 @@ class TaskAdmin extends AbstractAdmin
                     'label'=>'Номер задания'
                     ))
 
-                ->add('taskType', 'sonata_type_model', array(
+                ->add('taskType', 'sonata_type_model_list', array(
                     'label'=>'Тип задания',
-                    'property' => 'name',
+                    
                     ))
-                
+
+
                 ->add('taskText', 'text', array(
                     'label'=>'Текст задания'
                     ))
@@ -60,6 +61,10 @@ class TaskAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('subject', null, array('label'=>"Предмет"), 'entity', array(
+            'class' => 'AppBundle\Entity\Subject',
+            'choice_label' => 'name',
+            ))
             ->add('useState', 'doctrine_orm_boolean', array('label' => 'Тип экзамена'), null, array(
                 'choices'=>array(
                     'ЕГЭ'=>true,
@@ -74,10 +79,6 @@ class TaskAdmin extends AbstractAdmin
                     )
                 ))
             ->add('number', null, array('label'=>"Номер задания"))
-            ->add('subject', null, array('label'=>"Предмет"), 'entity', array(
-            'class' => 'AppBundle\Entity\Subject',
-            'choice_label' => 'name',
-            ))
         ;
     }
 
