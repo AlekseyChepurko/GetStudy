@@ -40,6 +40,22 @@ class TaskType
     }
 
     /**
+    * @ORM\OneToMany(targetEntity="Task", mappedBy="taskType")
+    */
+    private $task;
+
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    public function setTask(AppBundle\Entity\Task $task)
+    {
+        $this->task = $task;
+        return $this;
+    }
+
+    /**
      * Set name
      *
      * @param string $name

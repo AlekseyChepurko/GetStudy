@@ -22,18 +22,16 @@ class TaskAdmin extends AbstractAdmin
                     ),
                 'label' => 'Сложность задания (часть)',
                 ))
-                ->add('type',  ChoiceType::class, array(
-                    'choices'=> array(
-                        'B' => 'B',
-                        'A' => 'A',
-                        'C' => 'C'
-                        ),
-                    'label' => 'Тип задания',
-                    ))
+
                 ->add('number', null, array(
                     'label'=>'Номер задания'
                     ))
 
+                ->add('taskType', 'sonata_type_model', array(
+                    'label'=>'Тип задания',
+                    'property' => 'name',
+                    ))
+                
                 ->add('taskText', 'text', array(
                     'label'=>'Текст задания'
                     ))

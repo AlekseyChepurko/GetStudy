@@ -5,6 +5,7 @@
  use Doctrine\Common\Collections\ArrayCollection;
 
 
+
 /**
  * Task
  *
@@ -50,14 +51,6 @@
      */
     private $level; // A, B, C
 
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string")
-     */
-    private $type;
-
     /**
      * @var int
      *
@@ -72,6 +65,22 @@
      * @ORM\Column(name="answer", type="text")
      */
     private $answer;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="TaskType", inversedBy="task")
+    */
+    private $taskType;
+
+    public function getTaskType()
+    {
+        return $this->taskType;
+    }
+
+    public function setTaskType(AppBundle\Entity\TaskType $taskType)
+    {
+        $this->taskType = $taskType;
+        return $this;
+    }
 
     public function getAnswer()
     {
@@ -97,19 +106,6 @@
         return $this; 
     }
 
-
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    public function setType($type)
-    {
-        if (is_string($type))
-            $this->type = $type;
-        
-        return $this; 
-    }
 
     public function getNumber()
     {
