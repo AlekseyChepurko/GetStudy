@@ -13,8 +13,19 @@ class SubjectPageController extends DefaultController{
      */
 	public function showSubjectsAction(Request $request){
 
+		$em = $this->getDoctrine()->getManager();
 
-		return $this->render('default/subjects.html.twig');
+		$subjects = $em
+					->getRepository('AppBundle:Subject')
+					->findAll()
+					;	
+
+		$authError = $this->getAuthError($request);
+
+		return $this->render('default/subjects.html.twig', array(
+			'subjects' => $subjects,
+			'error' => $authError,
+			));
 	}
 
 }
