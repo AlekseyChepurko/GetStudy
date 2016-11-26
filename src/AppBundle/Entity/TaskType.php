@@ -36,12 +36,28 @@ class TaskType
     private $taskLevel;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="useState", type="boolean")
+     */
+    private $useState; //united state exam or not
+
+    /**
      * @var int
      *
      * @ORM\Column(name="taskNumber", type="integer")
      */
     private $taskNumber;
 
+    public function setUseState($state=false){
+        $this->useState = $state;
+    }   
+
+    public function getUseState()
+    {
+        return $this->useState;
+    }
+    
     public function getTaskLevel()
     {
         return $this->taskLevel;

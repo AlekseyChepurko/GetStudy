@@ -34,11 +34,6 @@ class Subject
     
 
     /**
-    * @ORM\OneToMany(targetEntity="Task", mappedBy="subject")
-    */
-    private $tasks;
-
-    /**
     * @ORM\OneToMany(targetEntity="TaskType", mappedBy="subject")
     */
     private $taskTypes;
@@ -59,16 +54,6 @@ class Subject
         $this->taskTypes = new ArrayCollection();
     }
 
-    public function addTask(\AppBundle\Entity\Task $task){
-    	
-    	$this->Tasks[] = $task;
-
-    	return $this;
-    }
-
-    public function getTasks(){
-    	return $this->tasks;
-    }
 
     public function setName($name){
     	$this->name = $name;

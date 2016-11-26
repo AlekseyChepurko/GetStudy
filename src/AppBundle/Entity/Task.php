@@ -4,8 +4,6 @@
  use Doctrine\ORM\Mapping as ORM;
  use Doctrine\Common\Collections\ArrayCollection;
 
-
-
 /**
  * Task
  *
@@ -24,39 +22,11 @@
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Subject", inversedBy="tasks")
-     */
-    private $subject;
-
-
-    /**
      * @var string
      *
      * @ORM\Column(name="taskText", type="text")
      */
     private $taskText;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="useState", type="boolean")
-     */
-    private $useState; //united state exam or not
-
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="level", type="string", length=1)
-     */
-    private $level; // A, B, C
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="number", type="integer")
-     */
-    private $number;
 
         
      /**
@@ -93,39 +63,6 @@
         return $this;
     }
 
-    public function getLevel()
-    {
-        return $this->level;
-    }
-
-    public function setLevel($level="A")
-    {
-        if (is_string($level))
-            $this->level = strtoupper($level);
-        
-        return $this; 
-    }
-
-
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    public function setNumber($number=1)
-    {
-        $this->number = $number;
-        return $this;
-    }
-
-    public function setUseState($state=false){
-        $this->useState = $state;
-    }   
-
-    public function getUseState()
-    {
-        return $this->useState;
-    }
 
     public function getTaskText(){
     	return $this->taskText;

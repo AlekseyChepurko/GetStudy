@@ -61,24 +61,24 @@ class TaskAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('subject', null, array('label'=>"Предмет"), 'entity', array(
+            ->add('taskType.subject', null, array('label'=>"Предмет"), 'entity', array(
             'class' => 'AppBundle\Entity\Subject',
             'choice_label' => 'name',
             ))
-            ->add('useState', 'doctrine_orm_boolean', array('label' => 'Тип экзамена'), null, array(
+            ->add('taskType.useState', 'doctrine_orm_boolean', array('label' => 'Тип экзамена'), null, array(
                 'choices'=>array(
                     'ЕГЭ'=>true,
                     'ГИА'=>false
                     )
                 ))
-            ->add('level', 'doctrine_orm_boolean', array('label' => 'Сложность задания (часть)'), null, array(
+            ->add('taskType.taskLevel', 'doctrine_orm_boolean', array('label' => 'Сложность задания (часть)'), null, array(
                 'choices'=>array(
                     'B' => 'B',
                     'A' => 'A',
                     'C' => 'C'
                     )
                 ))
-            ->add('number', null, array('label'=>"Номер задания"))
+            ->add('taskType.taskNumber', null, array('label'=>"Номер задания"))
         ;
     }
 
@@ -87,12 +87,12 @@ class TaskAdmin extends AbstractAdmin
         $listMapper
             ->add('id')
             ->addIdentifier('taskText')
-            ->add('level')
-            ->add('number')
-            ->add('type')
             ->add('answer')
-            ->add('subject.name')
-            ->add('useState', 'choice', array(
+            ->add('taskType.taskLevel')
+            ->add('taskType.taskNumber')
+            // ->add('type')
+            ->add('taskType.subject.name')
+            ->add('taskType.useState', 'choice', array(
                 'choices' => array(
                     false => 'ГИА',
                     true => 'ЕГЭ',
