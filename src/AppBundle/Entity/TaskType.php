@@ -31,6 +31,14 @@ class TaskType
     /**
      * @var string
      *
+     * @ORM\Column(name="subName", type="string", length=255)
+     */
+    private $subName;
+
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="taskLevel", type="string", length=1)
      */
     private $taskLevel;
@@ -49,6 +57,17 @@ class TaskType
      */
     private $taskNumber;
 
+    public function getSubName()
+    {
+        return $this->subName;
+    }
+
+    public function setSubName($subName)
+    {
+        $this->subName = $subName;
+        return $this;
+    }
+
     public function setUseState($state=false){
         $this->useState = $state;
     }   
@@ -57,7 +76,7 @@ class TaskType
     {
         return $this->useState;
     }
-    
+
     public function getTaskLevel()
     {
         return $this->taskLevel;

@@ -17,6 +17,13 @@ class TaskTypeAdmin extends AbstractAdmin
             ->with('Задание', array(
                 'class' => 'col-md-4'
                 ))
+                ->add('useState',  ChoiceType::class, array(
+                'choices'=> array(
+                    'ЕГЭ' => true,
+                    'ГИА' => false
+                    ),
+                'label' => 'Тип экзамена',
+                ))
                 ->add('taskLevel',  ChoiceType::class, array(
                     'choices'=> array(
                         'B' => 'B',
@@ -31,6 +38,7 @@ class TaskTypeAdmin extends AbstractAdmin
                 ->add('name', 'text', array(
                     'label' => "Тип задания (название)"
                     ))
+                ->add('subName')
             ->end()
 
             ->with('Предмет', array(
@@ -51,16 +59,22 @@ class TaskTypeAdmin extends AbstractAdmin
         $datagridMapper
             ->add('subject', null, array(), 'entity', array(
                 'class' => 'AppBundle\Entity\Subject',
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'label' => 'Предмет'
                 ))
-            // ->add('taskLevel', 'doctrine_orm_choice', array('label' => 'Сложность задания (часть)'), null, array(
-            //     'data'=>array(
-            //         'B' => 'B',
-            //         'A' => 'A',
-            //         'C' => 'C'
-            //         )
-            //     ))
-            ->add('taskLevel')
+            ->add('taskType.useState', 'doctrine_orm_choice', array('label' => 'Тип экзамена'), 'choice', array(
+                'choices'=>array(
+                    'ГИА'=>0,
+                    'ЕГЭ'=>1,
+                    )
+                ))
+            ->add('taskLevel', 'doctrine_orm_choice', array('label' => 'Сложность задания (часть)'), 'choice', array(
+                'choices'=>array(
+                    'B' => 'B',
+                    'A' => 'A',
+                    'C' => 'C'
+                    )
+                ))
             ->add('taskNumber', 'doctrine_orm_number')
             ;
     }
@@ -69,9 +83,16 @@ class TaskTypeAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('name', null, array())
+            ->addIdentifier('subName')
             ->add('subject.name')
             ->add('taskLevel')
             ->add('taskNumber')
+            ->add('useState', 'choice', array(
+                'choices' => array(
+                    false => 'ГИА',
+                    true => 'ЕГЭ',
+                    )
+                ))
         ;
     }
 

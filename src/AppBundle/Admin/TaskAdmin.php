@@ -14,22 +14,21 @@ class TaskAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Содержание задания', array())
-                ->add('level',  ChoiceType::class, array(
-                'choices'=> array(
-                    'B' => 'B',
-                    'A' => 'A',
-                    'C' => 'C'
-                    ),
-                'label' => 'Сложность задания (часть)',
-                ))
+                // ->add('level',  ChoiceType::class, array(
+                // 'choices'=> array(
+                //     'B' => 'B',
+                //     'A' => 'A',
+                //     'C' => 'C'
+                //     ),
+                // 'label' => 'Сложность задания (часть)',
+                // ))
 
-                ->add('number', null, array(
-                    'label'=>'Номер задания'
-                    ))
+                // ->add('number', null, array(
+                //     'label'=>'Номер задания'
+                //     ))
 
                 ->add('taskType', 'sonata_type_model_list', array(
                     'label'=>'Тип задания',
-                    
                     ))
 
 
@@ -39,23 +38,23 @@ class TaskAdmin extends AbstractAdmin
                 ->add('answer', 'text', array(
                     'label'=>'Ответ'
                     ))
-            ->end()
-
-            ->with('Выбрать предмет', array('class' => 'col-md-3'))
-                ->add('subject', 'sonata_type_model', array(
-                    'class' => 'AppBundle\Entity\Subject',
-                    'property' => 'name',
-                    'label'=>'Предмет'
-                ))
-                ->add('useState',  ChoiceType::class, array(
-                'choices'=> array(
-                    'ЕГЭ' => true,
-                    'ГИА' => false
-                    ),
-                'label' => 'Тип экзамена',
-                ))
-          
             ->end();
+
+            // ->with('Выбрать предмет', array('class' => 'col-md-3'))
+            //     ->add('subject', 'sonata_type_model', array(
+            //         'class' => 'AppBundle\Entity\Subject',
+            //         'property' => 'name',
+            //         'label'=>'Предмет'
+            //     ))
+            //     ->add('useState',  ChoiceType::class, array(
+            //     'choices'=> array(
+            //         'ЕГЭ' => true,
+            //         'ГИА' => false
+            //         ),
+            //     'label' => 'Тип экзамена',
+            //     ))
+          
+            // ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -65,13 +64,13 @@ class TaskAdmin extends AbstractAdmin
             'class' => 'AppBundle\Entity\Subject',
             'choice_label' => 'name',
             ))
-            ->add('taskType.useState', 'doctrine_orm_boolean', array('label' => 'Тип экзамена'), null, array(
+            ->add('taskType.useState', 'doctrine_orm_choice', array('label' => 'Тип экзамена'), 'choice', array(
                 'choices'=>array(
-                    'ЕГЭ'=>true,
-                    'ГИА'=>false
+                    'ЕГЭ'=>1,
+                    'ГИА'=>0
                     )
                 ))
-            ->add('taskType.taskLevel', 'doctrine_orm_boolean', array('label' => 'Сложность задания (часть)'), null, array(
+            ->add('taskType.taskLevel', 'doctrine_orm_choice', array('label' => 'Сложность задания (часть)'), 'choice', array(
                 'choices'=>array(
                     'B' => 'B',
                     'A' => 'A',
@@ -90,7 +89,6 @@ class TaskAdmin extends AbstractAdmin
             ->add('answer')
             ->add('taskType.taskLevel')
             ->add('taskType.taskNumber')
-            // ->add('type')
             ->add('taskType.subject.name')
             ->add('taskType.useState', 'choice', array(
                 'choices' => array(
