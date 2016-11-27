@@ -26,6 +26,6 @@ post_page:
   path: /post/{postId}
   defaults: {_controller: AppBundle:Post:showPost }
 
-subjects_page:
+subject_choice_level:
   path: /subjects
-  defaults: {_controller: AppBundle:SubjectPage:showSubjects }
+  defaults: {_controller: AppBundle:SubjectPage:showLevelChoice}

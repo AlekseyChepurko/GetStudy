@@ -1,0 +1,14 @@
+chosen_subjects:
+  path: /{examLevel}
+  defaults: {_controller: AppBundle:SubjectPage:showSubjects}
+
+use_subject:
+  path: /ЕГЭ
+
+bse_subject:
+  path: /гиа
+
+
+chosen_subject:
+  path: /{examLevel}/{subject}
+  defaults: {_controller: AppBundle:SubjectPage:showSubject}
