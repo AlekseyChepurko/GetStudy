@@ -31,12 +31,30 @@ class Subject
      */
     private $name;
 
-    
+
 
     /**
     * @ORM\OneToMany(targetEntity="TaskType", mappedBy="subject")
     */
     private $taskTypes;
+   
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="useState", type="string", length=3)
+     */
+    private $useState;
+
+    public function getUseState()
+    {
+        return $this->useState;
+    }
+
+    public function setUseState($state)
+    {
+        $this->useState = $state;
+        return $this;
+    }
 
     public function getTaskTypes()
     {

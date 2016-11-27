@@ -14,18 +14,6 @@ class TaskAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Содержание задания', array())
-                // ->add('level',  ChoiceType::class, array(
-                // 'choices'=> array(
-                //     'B' => 'B',
-                //     'A' => 'A',
-                //     'C' => 'C'
-                //     ),
-                // 'label' => 'Сложность задания (часть)',
-                // ))
-
-                // ->add('number', null, array(
-                //     'label'=>'Номер задания'
-                //     ))
 
                 ->add('taskType', 'sonata_type_model_list', array(
                     'label'=>'Тип задания',
@@ -64,10 +52,10 @@ class TaskAdmin extends AbstractAdmin
             'class' => 'AppBundle\Entity\Subject',
             'choice_label' => 'name',
             ))
-            ->add('taskType.useState', 'doctrine_orm_choice', array('label' => 'Тип экзамена'), 'choice', array(
+            ->add('taskType.subject.useState', 'doctrine_orm_choice', array('label' => 'Тип экзамена'), 'choice', array(
                 'choices'=>array(
-                    'ЕГЭ'=>1,
-                    'ГИА'=>0
+                    'ЕГЭ'=>'ЕГЭ',
+                    'ГИА'=>'ГИА'
                     )
                 ))
             ->add('taskType.taskLevel', 'doctrine_orm_choice', array('label' => 'Сложность задания (часть)'), 'choice', array(
@@ -90,12 +78,7 @@ class TaskAdmin extends AbstractAdmin
             ->add('taskType.taskLevel')
             ->add('taskType.taskNumber')
             ->add('taskType.subject.name')
-            ->add('taskType.useState', 'choice', array(
-                'choices' => array(
-                    false => 'ГИА',
-                    true => 'ЕГЭ',
-                    )
-                ))
+            ->add('taskType.subject.useState')
             ;
     }
 

@@ -43,12 +43,12 @@ class TaskType
      */
     private $taskLevel;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="useState", type="boolean")
-     */
-    private $useState; //united state exam or not
+    // *
+    //  * @var bool
+    //  *
+    //  * @ORM\Column(name="useState", type="boolean")
+     
+    // private $useState; //united state exam or not
 
     /**
      * @var int
@@ -68,14 +68,14 @@ class TaskType
         return $this;
     }
 
-    public function setUseState($state=false){
-        $this->useState = $state;
-    }   
+    // public function setUseState($state=false){
+    //     $this->useState = $state;
+    // }   
 
-    public function getUseState()
-    {
-        return $this->useState;
-    }
+    // public function getUseState()
+    // {
+    //     return $this->useState;
+    // }
 
     public function getTaskLevel()
     {

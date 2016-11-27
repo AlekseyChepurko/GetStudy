@@ -17,13 +17,13 @@ class TaskTypeAdmin extends AbstractAdmin
             ->with('Задание', array(
                 'class' => 'col-md-4'
                 ))
-                ->add('useState',  ChoiceType::class, array(
-                'choices'=> array(
-                    'ЕГЭ' => true,
-                    'ГИА' => false
-                    ),
-                'label' => 'Тип экзамена',
-                ))
+                // ->add('subject.useState', 'choice', array(
+                // 'choices'=> array(
+                //     'ЕГЭ' => true,
+                //     'ГИА' => false
+                //     ),
+                // 'label' => 'Тип экзамена',
+                // ))
                 ->add('taskLevel',  ChoiceType::class, array(
                     'choices'=> array(
                         'B' => 'B',
@@ -36,9 +36,11 @@ class TaskTypeAdmin extends AbstractAdmin
                     'label' => "Номер задания"
                     ))
                 ->add('name', 'text', array(
+                    'label' => 'Категория заданий'
+                    ))
+                ->add('subName', 'text', array(
                     'label' => "Тип задания (название)"
                     ))
-                ->add('subName')
             ->end()
 
             ->with('Предмет', array(
@@ -62,10 +64,10 @@ class TaskTypeAdmin extends AbstractAdmin
                 'choice_label' => 'name',
                 'label' => 'Предмет'
                 ))
-            ->add('taskType.useState', 'doctrine_orm_choice', array('label' => 'Тип экзамена'), 'choice', array(
+            ->add('subject.taskType.useState', 'doctrine_orm_choice', array('label' => 'Тип экзамена'), 'choice', array(
                 'choices'=>array(
-                    'ГИА'=>0,
-                    'ЕГЭ'=>1,
+                    'ГИА'=>'ГИА',
+                    'ЕГЭ'=>'ЕГЭ',
                     )
                 ))
             ->add('taskLevel', 'doctrine_orm_choice', array('label' => 'Сложность задания (часть)'), 'choice', array(
@@ -87,12 +89,7 @@ class TaskTypeAdmin extends AbstractAdmin
             ->add('subject.name')
             ->add('taskLevel')
             ->add('taskNumber')
-            ->add('useState', 'choice', array(
-                'choices' => array(
-                    false => 'ГИА',
-                    true => 'ЕГЭ',
-                    )
-                ))
+            ->add('subject.useState')
         ;
     }
 
