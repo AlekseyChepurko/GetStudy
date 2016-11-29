@@ -9,7 +9,7 @@ class SubjectPageController extends DefaultController{
 
 
     /**
-     * @Route("/{examLevel}/{subject}")
+     * @Route("/subjects/{examLevel}/{subject}")
      */
 	public function showSubjectAction($examLevel, $subject, Request $request){
 
