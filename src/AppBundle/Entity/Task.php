@@ -41,6 +41,22 @@
     */
     private $taskType;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="test", inversedBy="tasks")
+    */
+    private $test;
+
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+    public function setTest(\AppBundle\Entity\test $test)
+    {
+        $this->test = $test;
+        return $this;
+    }
+
     public function getTaskType()
     {
         return $this->taskType;
